@@ -45,7 +45,7 @@ Welcome to the STRATO Q2 2026 Project Dashboard repository. This repo contains c
 ---
 
 ### 3. Dashboard Update Summary (Documentation)
-https://github.com/ihiort/STRATO-Q2-Project-Dashboard/blob/main/DASHBOARD-UPDATE-SUMMARY.md
+**URL:** https://github.com/ihiort/STRATO-Q2-Project-Dashboard/blob/main/DASHBOARD-UPDATE-SUMMARY.md
 
 **Description:** Comprehensive documentation of recent dashboard updates and project additions
 
