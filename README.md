@@ -48,6 +48,17 @@ Welcome to the STRATO Q2 2026 Project Dashboard repository. This repo contains c
 
 - **README.md** - Dashboard overview, guide, and quick reference
 - **DASHBOARD-UPDATE-SUMMARY.md** - Detailed summary of recent updates (7 new projects added, April 29 - May 8, 2026)
+
+---
+
+## 📈 Dashboard Statistics
+
+---
+
+## 📄 Documentation Files
+
+- **README.md** - Dashboard overview, guide, and quick reference
+- **DASHBOARD-UPDATE-SUMMARY.md** - Detailed summary of recent updates (7 new projects added, April 29 - May 8, 2026)
   - Complete breakdown of all 27 projects
   - Linked issues distribution
   - Status and priority analysis
