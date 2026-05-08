@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRATO Shop & Control Panel Dashboard - Complete Linked Issues - Q2 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .project-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .project-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        .linked-issues-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        .linked-issues-table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .linked-issues-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .linked-issues-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .linked-issues-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .issue-key {
+            font-weight: 600;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+        }
+
+        .issue-key a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .issue-key a:hover {
+            text-decoration: underline;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .status-in-progress {
+            background: #bbdefb;
+            color: #1565c0;
+        }
+
+        .status-open {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+
+        .status-done {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .status-waiting {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .status-deferred {
+            background: #f8bbd0;
+            color: #880e4f;
+        }
+
+        .priority-critical {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .priority-major {
+            background: #ffecb3;
+            color: #f57f17;
+        }
+
+        .priority-blocker {
+            background: #ef9a9a;
+            color: #b71c1c;
+        }
+
+        .priority-minor {
+            background: #c5cae9;
+            color: #3f51b5;
+        }
+
+        .relationship-type {
+            background: #e0e0e0;
+            color: #333;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .summary-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.5em;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            color: #1565c0;
+        }
+
+        .no-links {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 6px;
+            color: #f57f17;
+            font-weight: 600;
+        }
+
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .control-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-item label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .control-item input,
+        .control-item select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-family: inherit;
+        }
+
+        .control-item input:focus,
+        .control-item select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .filter-tag {
+            display: inline-block;
+            background: #bbdefb;
+            color: #1565c0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .filter-tag .remove {
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.5em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .visibility-toggle {
+            cursor: pointer;
+            user-select: none;
+            padding: 2px 6px;
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔗 STRATO & Control Panel - Complete Linked Issues Report</h1>
+            <p class="subtitle">All cross-project issue relationships across 25 initiatives</p>
+            <p style="color: #666; margin-top: 15px;">This report shows ALL linked issues discovered across the STRATO Shop & Control Panel portfolio, including Child-Issues, Relates, Dependencies, Blocks, and Cloners relationships across multiple Jira projects.</p>
+        </header>
+
+        <!-- CONTROLS & FILTERS -->
+        <div class="controls">
+            <h3>🔍 Search & Filter</h3>
+            <div class="control-group">
+                <div class="control-item">
+                    <label for="searchInput">Search by Project Key or Name</label>
+                    <input type="text" id="searchInput" placeholder="e.g., PROJECTS-997, ipayment, Nextcloud...">
+                </div>
+                <div class="control-item">
+                    <label for="statusFilter">Filter by Status</label>
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Closed">Closed</option>
+                        <option value="Deferred">Deferred</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Open">Open</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label for="effortFilter">Minimum Effort (days)</label>
+                    <input type="number" id="effortFilter" placeholder="e.g., 30" min="0">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-item">
+                    <label for="linkedIssuesFilter">Minimum Linked Issues</label>
+                    <input type="number" id="linkedIssuesFilter" placeholder="e.g., 5" min="0">
+                </div>
+                <div class="control-item">
+                    <label for="priorityFilter">Filter by Priority</label>
+                    <select id="priorityFilter">
+                        <option value="">All Priorities</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Major">Major</option>
+                        <option value="Minor">Minor</option>
+                    </select>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+                <button class="btn btn-secondary" onclick="resetFilters()">Reset All</button>
+                <button class="btn btn-secondary" onclick="exportAsJSON()">Export JSON</button>
+                <button class="btn btn-secondary" onclick="exportAsCSV()">Export CSV</button>
+            </div>
+            <div id="activeFilters" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="card">
+            <h2>📊 Linked Issues Summary</h2>
+            <div class="summary">
+                <div class="summary-card">
+                    <div class="summary-label">Total Projects</div>
+                    <div class="summary-value">25</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Projects With Links</div>
+                    <div class="summary-value">20</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Projects Without Links</div>
+                    <div class="summary-value">2</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Total Linked Issues</div>
+                    <div class="summary-value">170+</div>
+                </div>
+            </div>
+            <div class="alert-info">
+                <strong>ℹ️ Methodology:</strong> This audit comprehensively extracted the issuelinks field from 20 PROJECTS-xxx initiatives (excluding PROJECTS-1692, PROJECTS-1164, and PROJECTS-1159 per project scope). It captures all relationship types: Child-Issue (SST epics), Relates (cross-project), Dependency, Blocks, and Cloners. For PROJECTS-1336, which uses distributed epic organization instead of standard issuelinks, we identified all related implementation epics across KSB, SHOQ (DINGOS & WOMBATS), and OP projects.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔗 Complete Linked Issues by Project</h2>
+
+            <!-- PROJECTS-997 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-997: ipayment Integration, Migration, and Implementation (150 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SWE-2952" target="_blank">SWE-2952</a></td>
+                            <td>ipayment integration, migration and implementation of all available Payment-Methods</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSCRONON-6509" target="_blank">BSSCRONON-6509</a></td>
+                            <td>ipayment Integration, Migration, and Implementation</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1359" target="_blank">PROJECTS-1359</a></td>
+                            <td>iDEAL Implementation</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">Approved</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Dependency</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSPCTASKS-14424" target="_blank">BSSPCTASKS-14424</a></td>
+                            <td>STRATO ControlPanel ipayment accounts</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSPCTASKS-14452" target="_blank">BSSPCTASKS-14452</a></td>
+                            <td>STRATO Shop Ipayment Accounts</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSPCTASKS-14933" target="_blank">BSSPCTASKS-14933</a></td>
+                            <td>Restructure of adyen group account setup</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-19127" target="_blank">CCNEWS-19127</a></td>
+                            <td>ipayment Integration, Migration, and Implementation</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1580" target="_blank">PROJECTS-1580</a></td>
+                            <td>iPayment Integration - Market and Payment Method Completion Step 2 and 3</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1089 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1089: Domain Dynamic Bundles (116 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/POR-15395" target="_blank">POR-15395</a></td>
+                            <td>Domain Bundles</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CONFIA-1177" target="_blank">CONFIA-1177</a></td>
+                            <td>Dynamic DomainBundles</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-18476" target="_blank">CCNEWS-18476</a></td>
+                            <td>[STRATO] Domain Dynamic Bundles</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1455 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1455: Aftermarket Integration (117 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-53" target="_blank">SST-53</a></td>
+                            <td>Integration of Aftermarket Premium Domains (MVP)</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-19916" target="_blank">CCNEWS-19916</a></td>
+                            <td>[PRE-CCNEWS] [Strato] Aftermarket Integration (BuyNow Premiums ONLY)</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1306 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1306: A/B Test IONOS like Portfolio (10 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1285" target="_blank">PROJECTS-1285</a></td>
+                            <td>Enable and introduce more contract periods</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Blocks (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SWE-2879" target="_blank">SWE-2879</a></td>
+                            <td>[STRATO] [WEB] VPS Merged portfolio ABT</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-18546" target="_blank">CCNEWS-18546</a></td>
+                            <td>[STRATO] VPS Portfolio A/B Test (DE)</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-945" target="_blank">PROJECTS-945</a></td>
+                            <td>[STRATO] Aggressive Pricing Adaptation</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1158 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1158: Nextcloud Workspace (131 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-132" target="_blank">SST-132</a></td>
+                            <td>Nextcloud Workspace</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1159" target="_blank">PROJECTS-1159</a></td>
+                            <td>[home.pl] Nextcloud Workspace</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-deferred">Deferred</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Cloners (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1164" target="_blank">PROJECTS-1164</a></td>
+                            <td>[fasthosts] Nextcloud Workspace</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-deferred">Deferred</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Cloners (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-988 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-988: rankingCoach free SEO WordPress Plugin (35 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-735" target="_blank">PROJECTS-735</a></td>
+                            <td>[STRATO] rankingCoach for Strato via CLIPP</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Blocks (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-76" target="_blank">SST-76</a></td>
+                            <td>rankingCoach free SEO WordPress Plugin</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CONFIA-1178" target="_blank">CONFIA-1178</a></td>
+                            <td>rankingCoach SEO-PlugIn / neues rC-Portfolio</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1299 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1299: new rC Portfolio (68 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-78" target="_blank">SST-78</a></td>
+                            <td>new rC Portfolio</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CONFIA-1178" target="_blank">CONFIA-1178</a></td>
+                            <td>rankingCoach SEO-PlugIn / neues rC-Portfolio</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1588 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1588: Price increase for BMC/NGCS servers (20 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/DEDI-157" target="_blank">DEDI-157</a></td>
+                            <td>[STRATO] PINC for BMC/NGCS servers</td>
+                            <td>Project</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-944 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-944: VPS Plesk License Price Increase (145 days) ⚡ CRITICAL</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/DEDI-158" target="_blank">DEDI-158</a></td>
+                            <td>Artikelanlage</td>
+                            <td>Sub-task</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/DWHDAF-4291" target="_blank">DWHDAF-4291</a></td>
+                            <td>Plesk - PINC</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/DWHDAF-4284" target="_blank">DWHDAF-4284</a></td>
+                            <td>Quo vadis, Plesk?</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-18488" target="_blank">CCNEWS-18488</a></td>
+                            <td>[STRATO] [Plesk] PINC: Plesk Licenses, CoreVPS & Dedicated BM</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-19728" target="_blank">CCNEWS-19728</a></td>
+                            <td>[STRATO][Plesk] PINC for Plesk licenses, Legacy Server</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1144 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1144: Provision of an n8n image for dedicated servers (36 days) 🔥 HIGHEST LINKED ISSUES</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-143" target="_blank">SST-143</a></td>
+                            <td>DE [WEB] Megamenü-Text anpassen</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SHOPCBP-2876" target="_blank">SHOPCBP-2876</a></td>
+                            <td>Expansion of n8n Landing Page to include Dedicated Servers & URL Migration</td>
+                            <td>Request</td>
+                            <td><span class="status-badge status-waiting">Waiting</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/MKTSEO-3571" target="_blank">MKTSEO-3571</a></td>
+                            <td>[DE] Include Dedis in /server/n8n-self-hosted/</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SRVPROJECT-61" target="_blank">SRVPROJECT-61</a></td>
+                            <td>Provision of an n8n image for dedicated servers (BMC)</td>
+                            <td>Project</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/IF-524" target="_blank">IF-524</a></td>
+                            <td>[BMC][IF] Integrate support for Images with Addons</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SERVERSRE-282" target="_blank">SERVERSRE-282</a></td>
+                            <td>[BMC][images] request for n8n image</td>
+                            <td>Request</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/TOHROADMAP-1347" target="_blank">TOHROADMAP-1347</a></td>
+                            <td>N8n Images for Dedis/Baremetal</td>
+                            <td>Project</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/GPHSERVER-1105" target="_blank">GPHSERVER-1105</a></td>
+                            <td>Ubuntu 24.04 + n8n for Dedicated Server</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/IF-383" target="_blank">IF-383</a></td>
+                            <td>Analysis: BMC - provide Ubuntu 24.04 + n8n</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SERVERSRE-495" target="_blank">SERVERSRE-495</a></td>
+                            <td>[BMC][IF][IMAGES] build deployment for Ubuntu 24.04 + n8n image</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1696 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1696: Strato .SE Compliance Breach (No effort estimate) 🔥 CRITICAL + HIGHEST LINKED ISSUES</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-136" target="_blank">SST-136</a></td>
+                            <td>Strato .SE Compliance Breach</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12663" target="_blank">KSB-12663</a></td>
+                            <td>Companyname Validation</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Rollout</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12658" target="_blank">KSB-12658</a></td>
+                            <td>Deactivate DomainGuard for .SE & .NU</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12669" target="_blank">KSB-12669</a></td>
+                            <td>Missing Field 'Organisationsnummer' in ChangeOwner</td>
+                            <td>Bug</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-39" target="_blank">SST-39</a></td>
+                            <td>SE [BUY] [FE] AGB-Link der Internetstiftelsen bei .se- und .nu-Domain-Registrierung aktualisieren</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROV-640" target="_blank">PROV-640</a></td>
+                            <td>domaintransfser .se fuer unbekannten inhaber</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SDF-3750" target="_blank">SDF-3750</a></td>
+                            <td>Anzeige der Ausweisenummer</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CES-1762" target="_blank">CES-1762</a></td>
+                            <td>Providerwechsel ohne Inhaberdaten</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CES-1758" target="_blank">CES-1758</a></td>
+                            <td>Kein Sofortiges Delete bei Storno bei KK Domains</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CES-1759" target="_blank">CES-1759</a></td>
+                            <td>Aktualisierung des Domain-Owners erst nach erfolgreicher Rückmeldung</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1718 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1718: Vibe-Coding Integration (No effort estimate)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1692" target="_blank">PROJECTS-1692</a></td>
+                            <td>Momentum AI — IONOS AI Program for SMB Digitalization</td>
+                            <td>Program</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue (inward)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CCNEWS-20199" target="_blank">CCNEWS-20199</a></td>
+                            <td>[AI] [Momentum] [STRATO] AI App Builder (Vibe-Coding Solution) Launch</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-waiting">Waiting</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Dependency (inward)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1336 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1336: IONOS Customer Shop Integration into Strato Control Panel (268 days)</div>
+                <div class="alert-info" style="margin-bottom: 15px;">
+                    <strong>ℹ️ Alternative Link Structure:</strong> This initiative uses distributed epic organization rather than standard issuelinks. Work is organized through related KSB (Frontend), SHOQ (Shop team implementations), and OP (Infrastructure) epics. Listed below are the primary implementation epics and related work items.
+                </div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12702" target="_blank">KSB-12702</a></td>
+                            <td>[FE] Integrate IONOS Customer Shop into the STRATO Control Panel</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Parent Epic (FE)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12488" target="_blank">KSB-12488</a></td>
+                            <td>[PHASE 1][KSB] Integration of existing customer shop module</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">PHASE 1 Epic</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12613" target="_blank">KSB-12613</a></td>
+                            <td>New Cname customer-shop.strato.de -> mein.ionos.de</td>
+                            <td>Sub-task</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child of KSB-12488</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12704" target="_blank">KSB-12704</a></td>
+                            <td>[PHASE 2][KSB] Integration of existing customer shop module</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">PHASE 2 Epic</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SHOQ-8232" target="_blank">SHOQ-8232</a></td>
+                            <td>[PHASE 2][DINGOS] IONOS Customer Shop Integration into the Strato Control Panel</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">Selected</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">DINGOS PHASE 2 Epic (~20+ stories)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SHOQ-8208" target="_blank">SHOQ-8208</a></td>
+                            <td>[PHASE 2][WOMBATS] IONOS Customer Shop Integration into the Strato Control Panel</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">WOMBATS PHASE 2 Epic (~20+ stories)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/OP-11941" target="_blank">OP-11941</a></td>
+                            <td>neue Subdomain prelive-customer-shop.strato.de</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Minor</span></td>
+                            <td><span class="relationship-type">Infrastructure Support</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/OP-12031" target="_blank">OP-12031</a></td>
+                            <td>neue Subdomain customer-shop.strato.de</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-done">Resolved</span></td>
+                            <td><span class="status-badge priority-major">Minor</span></td>
+                            <td><span class="relationship-type">Infrastructure Support</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/OP-12033" target="_blank">OP-12033</a></td>
+                            <td>neue Subdomain customer-shop.strato.de</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Minor</span></td>
+                            <td><span class="relationship-type">Infrastructure Support</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Note:</strong> SHOQ-8232 (DINGOS) and SHOQ-8208 (WOMBATS) are major epics containing approximately 40+ total stories/tasks across the two implementation tracks. These represent the significant implementation work for PROJECTS-1336 across the Shop team's different organizational units.</p>
+            </div>
+
+            <!-- PROJECTS-1580 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1580: iPayment Integration - Market and Payment Method Completion Step 2 and 3 (Closed)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-997" target="_blank">PROJECTS-997</a></td>
+                            <td>[STRATO] ipayment Integration</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1359 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1359: iDEAL Implementation (30 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-997" target="_blank">PROJECTS-997</a></td>
+                            <td>[STRATO] ipayment Integration</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Dependency (prerequisite)</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-344" target="_blank">PROJECTS-344</a></td>
+                            <td>STRATO new iDEAL implementation</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSPCTASKS-14933" target="_blank">BSSPCTASKS-14933</a></td>
+                            <td>Restructure of adyen group account setup</td>
+                            <td>Task</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSPCTASKS-15552" target="_blank">BSSPCTASKS-15552</a></td>
+                            <td>Implement iDeal via Adyen for ipayment</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-waiting">In Review</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1285 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1285: [STRATO] Enable and introduce more contract periods (30 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1306" target="_blank">PROJECTS-1306</a></td>
+                            <td>A/B Test IONOS like Portfolio</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">Approved</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Blocks</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-102" target="_blank">SST-102</a></td>
+                            <td>STRATO Introduce more contract periods</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-945 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-945: [STRATO] Aggressive Pricing "Adaptation" (Closed)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1306" target="_blank">PROJECTS-1306</a></td>
+                            <td>A/B Test IONOS like Portfolio</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">Approved</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-735 -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-735: [STRATO] rankingCoach for Strato via CLIPP (50 days)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSCRONON-5059" target="_blank">BSSCRONON-5059</a></td>
+                            <td>STRATO/IONOS Inbox Ads</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Affects</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/BSSCRONON-5484" target="_blank">BSSCRONON-5484</a></td>
+                            <td>Abrechnungslogik Inbox Ads</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Affects</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-78" target="_blank">SST-78</a></td>
+                            <td>STRATO new rC Portfolio</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Blocks</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-988" target="_blank">PROJECTS-988</a></td>
+                            <td>rankingCoach free SEO WordPress Plugin</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-deferred">Deferred</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Blocks</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SMEID-14049" target="_blank">SMEID-14049</a></td>
+                            <td>CLIPP Strato - RC</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12579" target="_blank">KSB-12579</a></td>
+                            <td>Integrate RankingCoach into test system</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/KSB-12652" target="_blank">KSB-12652</a></td>
+                            <td>RankingCoach Integration via CLIPP</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/CONFIA-1178" target="_blank">CONFIA-1178</a></td>
+                            <td>rankingCoach SEO-PlugIn</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1544: Enable and Introduce More Contract Periods - Q2 Expansion -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1544: Enable and Introduce More Contract Periods - Q2 Expansion (Major)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-48" target="_blank">SST-48</a></td>
+                            <td>[STRATO] Enable and Introduce More Contract Periods - Q2 Expansion</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-102" target="_blank">SST-102</a></td>
+                            <td>[STRATO] Introduce more contract periods</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1600: Launch AI Receptionist Strato SE, NL -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1600: Launch AI Receptionist Strato SE, NL (Critical)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-42" target="_blank">SST-42</a></td>
+                            <td>[STRATO] Launch AI Receptionist Strato SE, NL</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1683: Conversion Optimization for STRATO Shop -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1683: Conversion Optimization for STRATO Shop (Major)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-5" target="_blank">SST-5</a></td>
+                            <td>Conversion Optimization for STRATO Shop</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-942: VPS Bundles -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-942: VPS Bundles (Minor)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-77" target="_blank">SST-77</a></td>
+                            <td>VPS Bundles</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-minor">Minor</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/STRDWH-842" target="_blank">STRDWH-842</a></td>
+                            <td>VPS Bundles - Data Warehouse</td>
+                            <td>Story</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-major">Undefined</span></td>
+                            <td><span class="relationship-type">Relates</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-888: New Backup Integration -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-888: New Backup Integration (Major)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-907" target="_blank">PROJECTS-907</a></td>
+                            <td>New Backup Integration (Related Initiative)</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-done">Closed</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Cloners</span></td>
+                        </tr>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-397" target="_blank">PROJECTS-397</a></td>
+                            <td>Backup API</td>
+                            <td>Initiative</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td><span class="status-badge priority-critical">Critical</span></td>
+                            <td><span class="relationship-type">Dependency</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS-1716: Momentum Sovereign AI Chatbot — GA -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1716: Momentum Sovereign AI Chatbot — GA (Major)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/PROJECTS-1692" target="_blank">PROJECTS-1692</a></td>
+                            <td>Momentum AI Program</td>
+                            <td>Program</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><em>Note: PROJECTS-1692 is referenced but excluded from primary dashboard per user request.</em></p>
+            </div>
+
+            <!-- PROJECTS-1497: Microsoft 365 Price Increase -->
+            <div class="project-section">
+                <div class="project-title">PROJECTS-1497: Microsoft 365 Price Increase (Major)</div>
+                <table class="linked-issues-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Summary</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Relationship</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="issue-key"><a href="https://hosting-jira.1and1.org/browse/SST-52" target="_blank">SST-52</a></td>
+                            <td>Microsoft 365 Price Increase</td>
+                            <td>Epic</td>
+                            <td><span class="status-badge status-open">Open</span></td>
+                            <td><span class="status-badge priority-major">Major</span></td>
+                            <td><span class="relationship-type">Child-Issue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROJECTS WITHOUT LINKED ISSUES -->
+            <div style="background: #fff9c4; padding: 20px; border-radius: 6px; margin-top: 20px;">
+                <h3 style="color: #f57f17; margin-bottom: 15px;">⚠️ Projects WITHOUT Linked Issues (2)</h3>
+                <p style="margin-bottom: 10px;">The following projects have no cross-project linked issues detected:</p>
+                <ul style="margin-left: 20px; color: #f57f17;">
+                    <li><strong>PROJECTS-1213</strong>: Sitelock Migration to CLIPP (10 days)</li>
+                    <li><strong>PROJECTS-1512</strong>: PoC inhouse CDN (no effort estimate)</li>
+                </ul>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">Note: These projects may have child SST epics but show no external cross-project relationships.</p>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>📊 STRATO Shop & Control Panel Portfolio Dashboard</p>
+            <p>Complete Linked Issues Audit - Generated April 29, 2026</p>
+            <p>All linked issues across 25 PROJECTS initiatives with relationships to external Jira projects (PROJECTS-1692, PROJECTS-1164, PROJECTS-1159, PROJECTS-1314, PROJECTS-752 excluded per user request)</p>
+        </footer>
+    </div>
+
+    <script>
+        // Store project data for filtering
+        const projects = [];
+
+        function initializeProjects() {
+            const sections = document.querySelectorAll('.project-section');
+            sections.forEach(section => {
+                const title = section.querySelector('.project-title').textContent;
+                const match = title.match(/PROJECTS-(\d+)/);
+                if (match) {
+                    const key = 'PROJECTS-' + match[1];
+                    const issueRows = section.querySelectorAll('.linked-issues-table tbody tr');
+                    const issueCount = issueRows.length;
+
+                    // Extract effort from title
+                    const effortMatch = title.match(/\((\d+)\s*days\)/);
+                    const effort = effortMatch ? parseInt(effortMatch[1]) : null;
+
+                    // Extract status from title
+                    let status = 'Unknown';
+                    if (title.includes('Closed')) status = 'Closed';
+                    else if (title.includes('Deferred')) status = 'Deferred';
+                    else if (title.includes('In Progress')) status = 'In Progress';
+                    else if (title.includes('Approved')) status = 'Approved';
+
+                    projects.push({
+                        key: key,
+                        title: title,
+                        element: section,
+                        issueCount: issueCount,
+                        effort: effort,
+                        status: status
+                    });
+                }
+            });
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const effortFilter = parseInt(document.getElementById('effortFilter').value) || 0;
+            const linkedIssuesFilter = parseInt(document.getElementById('linkedIssuesFilter').value) || 0;
+            const priorityFilter = document.getElementById('priorityFilter').value;
+
+            // Track active filters
+            const activeFilters = [];
+            if (searchTerm) activeFilters.push(`Search: "${searchTerm}"`);
+            if (statusFilter) activeFilters.push(`Status: ${statusFilter}`);
+            if (effortFilter > 0) activeFilters.push(`Effort ≥ ${effortFilter} days`);
+            if (linkedIssuesFilter > 0) activeFilters.push(`Linked Issues ≥ ${linkedIssuesFilter}`);
+            if (priorityFilter) activeFilters.push(`Priority: ${priorityFilter}`);
+
+            updateActiveFiltersDisplay(activeFilters);
+
+            let visibleCount = 0;
+            projects.forEach(project => {
+                let match = true;
+
+                // Search filter
+                if (searchTerm && !project.key.toLowerCase().includes(searchTerm) && !project.title.toLowerCase().includes(searchTerm)) {
+                    match = false;
+                }
+
+                // Status filter
+                if (statusFilter && !project.title.includes(statusFilter)) {
+                    match = false;
+                }
+
+                // Effort filter
+                if (effortFilter > 0 && (project.effort === null || project.effort < effortFilter)) {
+                    match = false;
+                }
+
+                // Linked issues filter
+                if (linkedIssuesFilter > 0 && project.issueCount < linkedIssuesFilter) {
+                    match = false;
+                }
+
+                // Priority filter - check if title contains priority badge
+                if (priorityFilter && !project.element.textContent.includes(priorityFilter)) {
+                    match = false;
+                }
+
+                if (match) {
+                    project.element.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    project.element.classList.add('hidden');
+                }
+            });
+
+            // Show results message
+            const totalProjects = projects.length;
+            console.log(`Showing ${visibleCount} of ${totalProjects} projects`);
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('effortFilter').value = '';
+            document.getElementById('linkedIssuesFilter').value = '';
+            document.getElementById('priorityFilter').value = '';
+            document.getElementById('activeFilters').innerHTML = '';
+
+            projects.forEach(project => {
+                project.element.classList.remove('hidden');
+            });
+        }
+
+        function updateActiveFiltersDisplay(filters) {
+            const container = document.getElementById('activeFilters');
+            if (filters.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '<strong>Active Filters:</strong> ';
+            html += filters.map(filter => `<span class="filter-tag">${filter}</span>`).join('');
+            container.innerHTML = html;
+        }
+
+        function exportAsJSON() {
+            const visibleProjects = projects.filter(p => !p.element.classList.contains('hidden'));
+
+            const data = visibleProjects.map(p => ({
+                key: p.key,
+                title: p.title,
+                status: p.status,
+                effort: p.effort,
+                linkedIssues: p.issueCount
+            }));
+
+            const json = JSON.stringify(data, null, 2);
+            downloadFile(json, 'strato-dashboard.json', 'application/json');
+        }
+
+        function exportAsCSV() {
+            const visibleProjects = projects.filter(p => !p.element.classList.contains('hidden'));
+
+            let csv = 'Project Key,Title,Status,Effort (days),Linked Issues\n';
+            visibleProjects.forEach(p => {
+                csv += `"${p.key}","${p.title.replace(/"/g, '""')}","${p.status}","${p.effort || 'N/A'}","${p.issueCount}"\n`;
+            });
+
+            downloadFile(csv, 'strato-dashboard.csv', 'text/csv');
+        }
+
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], { type: contentType });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProjects();
+            console.log(`Dashboard initialized with ${projects.length} projects`);
+        });
+
+        // Live search as user types
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                applyFilters();
+            }
+        });
+    </script>
+</body>
+</html>
